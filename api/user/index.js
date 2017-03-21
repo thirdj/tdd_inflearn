@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 
 const users = [
   {id: 1, name: '111'},
@@ -5,7 +7,7 @@ const users = [
   {id: 3, name: '333'}
 ];
 
-app.get('/users', (req, res) => {
+router.get('/', (req, res) => {
   req.query.limit = req.query.limit || 10;
   const limit = parseInt(req.query.limit, 10);
   if (Number.isNaN(limit)) {
@@ -14,7 +16,7 @@ app.get('/users', (req, res) => {
   res.json(users.slice(0, limit));
 });
 
-app.get('/users/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   // 기본 문자열이라서.
   const id = parseInt(req.params.id, 10);
   const user = users.filter(user => user.id === id)[0]; // Array
@@ -25,11 +27,11 @@ app.get('/users/:id', (req, res) => {
   res.json(user);
 });
 
-app.delete('/users/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
 
 })
 
-app.post('/users', (req, res) => {
+router.post('/', (req, res) => {
   // body 를 지원하지 않아 bodyParser 사용해야함.
   // multer 는 이미지나 영상등 큰 데이터를 처리할 때 사용 함.
   const name = req.body.name;
@@ -47,7 +49,7 @@ app.post('/users', (req, res) => {
 
 });
 
-app.put('/users/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const id = parseInt(req.params.id, 10); // param
   if (Number.isNaN(id)) return res.status(400).end();
 
@@ -55,7 +57,6 @@ app.put('/users/:id', (req, res) => {
   if (!name) return res.status(400).end();
 
   const isConflict = users.filter(user => user.name === name).length;
-  console.log('isConflict '. isConflict);
   if (isConflict) return res.status(409).end();
 
   const user = users.filter(user => user.id === id)[0];
@@ -65,3 +66,5 @@ app.put('/users/:id', (req, res) => {
 
   res.json(user);
 });
+
+module.exports = router;

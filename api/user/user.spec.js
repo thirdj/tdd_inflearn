@@ -6,7 +6,7 @@ const should = require('should');
 const app = require('../../index');
 const models = require('../../models');
 
-describe.only('GET /users는 ', () => {
+describe('GET /users는 ', () => {
 
   describe('성공시', () => {
 
@@ -75,7 +75,7 @@ describe('GET /users/1는 ', () => {
     })
   })
 });
-/*
+
 describe('DELETE /users/1', () => {
   describe('성공시 ', () => {
     it('204를 응답한다', done => {
@@ -94,8 +94,8 @@ describe('DELETE /users/1', () => {
     });
   });
 })
-*/
-describe('POST /users/', () => {
+
+describe.only('POST /users/', () => {
   describe('성공시 ', () => {
     // before it 실행시 미리 실행 되는 함수
     // 중복코드 방지

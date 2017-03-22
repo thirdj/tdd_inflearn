@@ -20,13 +20,24 @@ const show = (req, res) => {
   const user = users.filter(user => user.id === id)[0]; // Array
 
   if (Number.isNaN(id)) return res.status(400).end();
-  if (!user) return res.status(404).end();
 
-  res.json(user);
+  models.User.findOne({
+    where: {
+      id
+    }
+  }).then(user => {
+    if (!user) return res.status(404).end();
+    res.json(user);
+  })
+
 };
 
 const destroy = (req, res) => {
-  // 
+  const id = parseInt(req.params.id, 10);
+  if (Number.isNaN(id)) return res.status(400).end();
+
+  users = users.filter(user => user.id !== id);
+  res.status(204).end();
 };
 
 const create = (req, res) => {

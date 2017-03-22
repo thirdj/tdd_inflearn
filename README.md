@@ -48,6 +48,9 @@ it === test case
 // 해당 내용만 테스트 하도록 함
 describe.only(...)
 it.only(...)
+
+// watch
+"test": "NODE_ENV=test mocha ./api/user/user.spec.js -w"
 ```
 
 ## API 테스트 만들기
@@ -116,3 +119,9 @@ delete from users where id = 1;
   - 우리가 사용할 유저 모델을 만들어 보자.
     * sequelize.define(): 모델 정의
     * sequelize.sync(): 데이터베이스 연동
+
+### sqlite
+```
+logging: false
+-> default console.log 와 bind 되어 있어서 query 문을 보여줌.
+```

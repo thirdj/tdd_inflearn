@@ -8,7 +8,10 @@ const seqObj = new Sequelize({
 // 파라미터는 1. 테이블명, 2. 속성
 // id 는 자동 생성됨.
 const User = seqObj.define('User', {
-  name: Sequelize.STRING // varchar 255
+  name: {
+    type: Sequelize.STRING, // varchar 255
+    unique: true
+  }
 });
 
 module.exports = {Sequelize, seqObj, User};

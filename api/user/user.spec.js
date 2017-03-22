@@ -7,15 +7,14 @@ const app = require('../../index');
 const models = require('../../models');
 
 describe('GET /users는 ', () => {
+  // 샘플 데이터를 넣어 줌.
+  const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
+  before(() => models.seqObj.sync({force: true}));
+
+  // 여러개의 데이터를 입력 해줌.
+  before(() => models.User.bulkCreate(users));
 
   describe('성공시', () => {
-
-    // 샘플 데이터를 넣어 줌.
-    const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
-    before(() => models.seqObj.sync({force: true}));
-
-    // 여러개의 데이터를 입력 해줌.
-    before(() => models.User.bulkCreate(users));
     // 해당 케이스만 테스트 하도록 함.
     // it.only();
     it('유저 객체를 담은 배열로 응답한다', done => {
@@ -50,12 +49,19 @@ describe('GET /users는 ', () => {
 });
 
 describe('GET /users/1는 ', () => {
+  // 샘플 데이터를 넣어 줌.
+  const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
+  before(() => models.seqObj.sync({force: true}));
+
+  // 여러개의 데이터를 입력 해줌.
+  before(() => models.User.bulkCreate(users));
+
   describe('성공시 ', () => {
-    it('id가 2인 유저 객체를 반환한다', done => {
+    it('id가 1인 유저 객체를 반환한다', done => {
       supertest(app)
-        .get('/users/2')
+        .get('/users/1')
         .end((err, res) => {
-          res.body.should.have.property('id', 2);
+          res.body.should.have.property('id', 1);
           done();
         });
     })
@@ -63,13 +69,13 @@ describe('GET /users/1는 ', () => {
   describe('실패시 ', () => {
     it('id 가 숫자가 아닐경우 400으로 응답한다. ', done => {
       supertest(app)
-        .get('/users/dd')
+        .get('/users/one')
         .expect(400)
         .end(done);
     });
     it('id로 유저를 찾을 수 없을 때 404로 응답한다. ', done => {
       supertest(app)
-        .get('/users/5')
+        .get('/users/999')
         .expect(404)
         .end(done);
     })
@@ -77,6 +83,13 @@ describe('GET /users/1는 ', () => {
 });
 
 describe('DELETE /users/1', () => {
+  // 샘플 데이터를 넣어 줌.
+  const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
+  before(() => models.seqObj.sync({force: true}));
+
+  // 여러개의 데이터를 입력 해줌.
+  before(() => models.User.bulkCreate(users));
+
   describe('성공시 ', () => {
     it('204를 응답한다', done => {
       supertest(app)
@@ -95,7 +108,13 @@ describe('DELETE /users/1', () => {
   });
 })
 
-describe.only('POST /users/', () => {
+describe('POST /users/', () => {
+  // 샘플 데이터를 넣어 줌.
+  const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
+  before(() => models.seqObj.sync({force: true}));
+
+  // 여러개의 데이터를 입력 해줌.
+  before(() => models.User.bulkCreate(users));
   describe('성공시 ', () => {
     // before it 실행시 미리 실행 되는 함수
     // 중복코드 방지
@@ -138,6 +157,13 @@ describe.only('POST /users/', () => {
 });
 
 describe('PUT /users/:id ', () => {
+  // 샘플 데이터를 넣어 줌.
+  const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
+  before(() => models.seqObj.sync({force: true}));
+
+  // 여러개의 데이터를 입력 해줌.
+  before(() => models.User.bulkCreate(users));
+
   describe('성공시 ', () => {
     it('변경된 name을 응답한다. ', done => {
       const name = 'thirdjj'
@@ -177,7 +203,7 @@ describe('PUT /users/:id ', () => {
     it('이름이 중복일 경우 409를 응답한다.', done => {
       supertest(app)
         .put('/users/2')
-        .send({name: '222'})
+        .send({name: 'alice'})
         .expect(409)
         .end(done)
     });

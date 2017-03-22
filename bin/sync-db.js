@@ -7,5 +7,8 @@ const models = require('../models');
 // models.seqObj.sync({force: true});
 
 module.exports = () => {
-  return models.seqObj.sync({force: true});
+  const options = {
+    force: process.env.NODE_ENV === 'test' ? true : false
+  }
+  return models.seqObj.sync({options});
 };

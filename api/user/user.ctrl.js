@@ -1,9 +1,5 @@
 
-const users = [
-  {id: 1, name: '111'},
-  {id: 2, name: '222'},
-  {id: 3, name: '333'}
-];
+const models = require('../../models');
 
 const index = (req, res) => {
   req.query.limit = req.query.limit || 10;
@@ -11,7 +7,13 @@ const index = (req, res) => {
   if (Number.isNaN(limit)) {
     return res.status(400).end(); // 기본 status code 는 200
   }
-  res.json(users.slice(0, limit));
+
+  models.User.findAll({})
+    .then(users => {
+      res.json(users);
+    });
+
+  // res.json(users.slice(0, limit));
 };
 
 const show = (req, res) => {

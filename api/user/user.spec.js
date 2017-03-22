@@ -4,10 +4,14 @@ const supertest = require('supertest');
 const should = require('should');
 
 const app = require('../../index');
+const models = require('../../models');
 
 describe('GET /users는 ', () => {
 
-  describe('성공시', () => {
+  describe.only('성공시', () => {
+    before(() => models.seqObj.sync({force: true}));
+    // 해당 케이스만 테스트 하도록 함.
+    // it.only();
     it('유저 객체를 담은 배열로 응답한다', done => {
       supertest(app)
         .get('/users')

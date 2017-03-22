@@ -4,19 +4,20 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const user = require('./api/user');
 
-const port = 5000;
-const host = 'localhost';
-
 // middleware
-app.use(morgan('dev'));
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('dev'));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/users', user);
 
-app.listen(port, (req, res) => {
-  console.log(`Server is running http://${host}:${port}`);
-});
+// 테스트 스크립트 실행시에도 실행이 되기 때문에 따로 분리 함.
+// app.listen(port, () => {
+//   console.log(`Server is running http://${host}:${port}`);
+// });
 
 // 모듈화
 module.exports = app;

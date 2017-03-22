@@ -10,11 +10,13 @@
     "express": "^4.15.2",
     "mocha": "^3.2.0",
     "morgan": "^1.8.1",
+    "sequelize": "^3.30.2",
     "should": "^11.2.1",
+    "sqlite3": "^3.1.8",
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "test": "mocha ./api/user/user.spec.js",
-    "start": "nodemon index"
+    "test": "NODE_ENV=test mocha ./api/user/user.spec.js",
+    "start": "nodemon ./bin/server.js"
   }
 }

@@ -7,8 +7,6 @@
 3. 라우팅 설정을 할 수 있다.
 4. 서버를 요청 대기 상태로 만들수 있다.
 
-
-
 ### 미들웨어
 1. 미들웨어는 함수들의 연속이다.
 2. 로깅 미들웨어를 만들어 보자.
@@ -46,6 +44,10 @@
 ```
 describe === test suite
 it === test case
+
+// 해당 내용만 테스트 하도록 함
+describe.only(...)
+it.only(...)
 ```
 
 ## API 테스트 만들기
@@ -88,3 +90,29 @@ multer 는 이미지나 영상등 큰 데이터를 처리할 때 사용 함.
   2. name이 없을 경우 400 응답
   3. 없는 유저일 경우 404 응답
   4. 이름이 중복일 경우 409 응답
+
+### ORM
+  - 데이터베이스를 객체로 추상화해 노은 것을 ORM(Object Realational Mapping) 라고 함.
+  - 쿼리를 직접 작성하는 대신 ORM 의 메소드로 데이터 관리 할 수 있는 것이 장점이다.
+  - 노드에서 SQL ORM은 시퀄라이저(Sequelize)가 있다.
+
+##### Usage
+```
+insert users('name') values('alice');
+-> User.create({name: 'alice'});
+
+select * from users;
+-> User.findAll();
+
+update users set name = 'bek' where id = 1;
+-> User.update({name: 'bek'}, {where: {id: 1}});
+
+delete from users where id = 1;
+-> User.destroy({where: {id: 1}});
+```
+
+##### Model
+  - 데이터베이스 테이블을 ORM으로 추상화 한 것을 모델이라고 한다.
+  - 우리가 사용할 유저 모델을 만들어 보자.
+    * sequelize.define(): 모델 정의
+    * sequelize.sync(): 데이터베이스 연동

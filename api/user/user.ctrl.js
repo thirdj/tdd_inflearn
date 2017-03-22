@@ -8,16 +8,14 @@ const index = (req, res) => {
     return res.status(400).end(); // 기본 status code 는 200
   }
 
-  models.User.findAll({})
+  models.User.findAll({ limit })
     .then(users => {
       res.json(users);
     });
-
-  // res.json(users.slice(0, limit));
 };
 
 const show = (req, res) => {
-  // 기본 문자열이라서.
+  // 기본 문자열이라서 parseInt 사용함.
   const id = parseInt(req.params.id, 10);
   const user = users.filter(user => user.id === id)[0]; // Array
 

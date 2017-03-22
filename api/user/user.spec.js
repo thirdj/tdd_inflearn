@@ -6,10 +6,16 @@ const should = require('should');
 const app = require('../../index');
 const models = require('../../models');
 
-describe('GET /users는 ', () => {
+describe.only('GET /users는 ', () => {
 
-  describe.only('성공시', () => {
+  describe('성공시', () => {
+
+    // 샘플 데이터를 넣어 줌.
+    const users = [{name: 'alice'}, {name: 'bek'}, {name: 'chris'}];
     before(() => models.seqObj.sync({force: true}));
+
+    // 여러개의 데이터를 입력 해줌.
+    before(() => models.User.bulkCreate(users));
     // 해당 케이스만 테스트 하도록 함.
     // it.only();
     it('유저 객체를 담은 배열로 응답한다', done => {
